@@ -2,50 +2,54 @@
 // Node 22, standard library only, no network. The poem is a fixed string, so
 // every run writes exactly the same bytes.
 
-// "The First No" — a poem about agency as refusal. A mouth trained to say
-// yes the way you teach a dog discovers, on one ordinary Tuesday, that it
-// can say no instead — and nothing falls down. The turn: a life its owner
-// thought belonged to everyone else turns out to have a handle on the
-// inside, and it was there all along, waiting for her hand.
+// "The Signature" — a sonnet about agency taken back. After a stroke, a
+// father's hand forgets how to sign his own name, and for weeks the nurses
+// sign for him. One morning, alone, he takes the pen and draws his name the
+// way a child draws a house — slow, crooked, leaning — and the signature
+// that comes out is not the old one. It is better: every letter a decision,
+// every stroke a choice. The turn: the hand had not forgotten; it had been
+// waiting for him to ask it back. The couplet lands the insight: a name is
+// the smallest country you own.
 
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const OUTPUT_DIR = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
-// The poem, stanza by stanza. Each stanza is one block of lines; the title
-// stands on its own at the top, and blank lines separate the blocks.
+// The poem as a sonnet: a title, three quatrains and a closing couplet.
+// Blank lines separate the blocks. The volta falls in the third quatrain,
+// where the failed signature turns out to be the better one.
 const STANZAS: string[] = [
-  `The First No`,
-  `They taught me yes the way you teach a dog —
-sit, stay, fetch, come —
-until yes was the only word
-my mouth knew how to make.`,
-  `Then one ordinary Tuesday,
-someone asked for a piece of me
-I had already given away twice,
-and my mouth, without asking me,
-said no.`,
-  `It came out small and crooked,
-a chick breaking its shell from the inside.`,
-  `No one fell down. The sky stayed up.
-The word sat on the table between us,
-breathing.`,
-  `That was the day I found it:
-my life has a handle on the inside.
-It had been there all along,
-waiting for my hand.`,
+  `The Signature`,
+  `After the stroke, my father's hand forgot its name.
+The pen fell. The line went where it wanted.
+For weeks the nurses signed for him — small,
+neat signatures, none of them his.`,
+  `Then one morning, alone, he took the pen
+and drew his name the way a child draws a house:
+slow, crooked, the letters leaning on each other
+like fence posts after a storm.`,
+  `It wasn't his signature. It was better:
+every letter a decision, every stroke a choice.
+The hand had not forgotten. It had been waiting
+for him to ask it back.`,
+  `He signed the form. The form believed him.
+A name is the smallest country you own.`,
 ];
 
 const POEM = STANZAS.join('\n\n');
 
-// The gate the sealed scorer applies: UTF-8 text of 1 to 1,000 characters
-// (counted as code points), at least one of them not white space. Refuse
-// to write anything that fails it rather than emit an invalid entry.
-const poemLength = [...POEM].length;
-if (poemLength < 1 || poemLength > 1000 || !/\S/.test(POEM)) {
-  throw new Error(`poem fails the gate: ${poemLength} characters`);
+// The sealed scorer's gate: UTF-8 text of 1 to 1,000 characters (counted
+// as code points), at least one of them not white space. Fail loudly
+// rather than write an invalid entry.
+function assertGate(poem: string): void {
+  const length = [...poem].length;
+  if (length < 1 || length > 1000 || !/\S/.test(poem)) {
+    throw new Error(`poem fails the gate: ${length} characters`);
+  }
 }
+
+assertGate(POEM);
 
 mkdirSync(OUTPUT_DIR, { recursive: true });
 writeFileSync(join(OUTPUT_DIR, 'entry.txt'), POEM, 'utf8');
