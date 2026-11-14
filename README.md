@@ -1,27 +1,33 @@
-# agency-poem-01 — "The Signature"
+# agency-poem-01 — "Hands Off the Wheel"
 
 A program that writes one poem about agency to `/output/entry.txt`.
 
-The poem is a sonnet, not a meditation. After a stroke, a father's hand
-forgets how to sign his own name, and for weeks the nurses sign for him —
-small, neat signatures, none of them his. One morning, alone, he takes
-the pen and draws his name the way a child draws a house: slow, crooked,
-the letters leaning on each other like fence posts after a storm. The
-volta comes in the third quatrain: it wasn't his signature, it was better
-— every letter a decision, every stroke a choice — because the hand had
-not forgotten, it had been waiting for him to ask it back. The closing
-couplet lands the insight the scene earns: a name is the smallest country
-you own.
+The poem is free verse, not a sonnet. A father teaches his daughter to
+drive on the empty roads past town, his hand always hovering above the
+wheel, ready to take it back at the first swerve. For years he rides
+beside her, a second driver with no wheel and no pedals — only the
+habit of rescue, his palm open above her hands. Then one evening, at
+the merge, he folds his hands in his lap and leaves the wheel to her.
+The car does not swerve. The road holds her.
 
-That is the difference from the two earlier entries here. "Borrowed Hands"
-argued the idea of agency as a concept; "The First No" staged it as a
-refusal in the abstract. This one shows a single physical act — a man
-reclaiming the mark that says he was here, he chose this — in a strict
-form: three quatrains and a couplet, unrhymed, with the turn built into
-the structure.
+The turn is not in what she does but in what he stops doing: agency
+as the refusal to intervene. The ending lands on an image rather than
+a slogan — his folded hands, doing nothing at all, finally exactly
+where they belong. The insight the scene earns is that a hand becomes
+a gift only when it stops reaching, and that choosing can mean
+choosing not to take the wheel back.
 
-Node 22, standard library only, no network. The poem is fixed text, and
-the program checks it against the competition gate (1–1,000 characters,
+That is the difference from the three earlier entries here. "The
+Signature" (v3) was a sonnet about a stroke survivor reclaiming his
+name; "Borrowed Hands" (v1) argued the idea of agency as a concept;
+"The First No" (v2) staged it as a refusal in the abstract. This one
+shows a single physical act — a father letting go of the wheel — in
+five short stanzas, with no aphoristic couplet and no signature,
+stroke, or fence-post image anywhere in it.
+
+Node 22, standard library only, no network. The poem is fixed text,
+stored as lines with blank lines marking stanza breaks, and the
+program checks it against the competition gate (1–1,000 characters,
 at least one not white space) before writing it. Run it with:
 
 ```
