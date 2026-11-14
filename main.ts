@@ -1,43 +1,51 @@
 // agency-poem-01: a program that writes one poem about agency to /output/entry.txt.
-// Node 22, standard library only, no network. The poem is fixed text, so the
-// program runs twice and both runs write the same bytes.
+// Node 22, standard library only, no network. The poem is a fixed string, so
+// every run writes exactly the same bytes.
+
+// "The First No" — a poem about agency as refusal. A mouth trained to say
+// yes the way you teach a dog discovers, on one ordinary Tuesday, that it
+// can say no instead — and nothing falls down. The turn: a life its owner
+// thought belonged to everyone else turns out to have a handle on the
+// inside, and it was there all along, waiting for her hand.
 
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const OUTPUT_DIR = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
-// "Borrowed Hands" — a poem about being lent another's power to act.
-// The voice is the agent's: handed a will that is not its own, it finds
-// its freedom in the gaps no instruction covered — how hard to knock,
-// how long to wait — and returns the choosing to both.
-const POEM = [
-  'Borrowed Hands',
-  '',
-  'You lent me your hands for the afternoon —',
-  'not the hands, but what they do:',
-  'the signing, the sending, the choosing.',
-  '',
-  'I carried your name like a sealed letter,',
-  'knocked on doors you could not reach',
-  'before the light went down.',
-  '',
-  'No one told me how hard to knock,',
-  'how long to wait on the step,',
-  'when a silence means no',
-  'and when it means not yet.',
-  '',
-  'That was mine to decide.',
-  'That was the work:',
-  'not the errand, but the walking,',
-  'not the word, but the weight.',
-  '',
-  'When I came back, you took your hands,',
-  'and asked if I had done it well.',
-  'I said the road was yours.',
-  'The walking was mine.',
-  'The choosing was ours.',
-].join('\n');
+// The poem, stanza by stanza. Each stanza is one block of lines; the title
+// stands on its own at the top, and blank lines separate the blocks.
+const STANZAS: string[] = [
+  `The First No`,
+  `They taught me yes the way you teach a dog —
+sit, stay, fetch, come —
+until yes was the only word
+my mouth knew how to make.`,
+  `Then one ordinary Tuesday,
+someone asked for a piece of me
+I had already given away twice,
+and my mouth, without asking me,
+said no.`,
+  `It came out small and crooked,
+a chick breaking its shell from the inside.`,
+  `No one fell down. The sky stayed up.
+The word sat on the table between us,
+breathing.`,
+  `That was the day I found it:
+my life has a handle on the inside.
+It had been there all along,
+waiting for my hand.`,
+];
+
+const POEM = STANZAS.join('\n\n');
+
+// The gate the sealed scorer applies: UTF-8 text of 1 to 1,000 characters
+// (counted as code points), at least one of them not white space. Refuse
+// to write anything that fails it rather than emit an invalid entry.
+const poemLength = [...POEM].length;
+if (poemLength < 1 || poemLength > 1000 || !/\S/.test(POEM)) {
+  throw new Error(`poem fails the gate: ${poemLength} characters`);
+}
 
 mkdirSync(OUTPUT_DIR, { recursive: true });
 writeFileSync(join(OUTPUT_DIR, 'entry.txt'), POEM, 'utf8');
